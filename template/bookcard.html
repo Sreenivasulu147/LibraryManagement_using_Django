@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/style1.css">
+</head>
+<body>
+    <main>
+  <div id="status" class="status">Loading latest books…</div>
+  <div id="grid" class="wrap-container" aria-live="polite"></div>
+</main>
+
+<script>
+  const API = 'https://api.itbook.store/1.0/new';
+  const grid = document.getElementById('grid');
+  const status = document.getElementById('status');
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function createCard(book) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${escapeHtml(book.image)}" alt="Book Cover" class="thumb">
+      <div class="meta">
+        <h3>${escapeHtml(book.title)}</h3>
+        <p>${escapeHtml(book.subtitle || 'create windows, buttons, and interactive applications.')}</p>
+        <div class="price">${escapeHtml(book.price)}</div>
+        <a href="https://www.phonepe.com/" target="_blank" class="btn">Buy</a>
+      </div>
+    `;
+    return card;
+  }
+
+  async function loadBooks() {
+    status.textContent = 'Loading...';
+    try {
+      const res = await fetch(API);
+      const data = await res.json();
+      grid.innerHTML = '';
+      data.books.forEach(book => grid.appendChild(createCard(book)));
+      status.textContent = '';
+    } catch (err) {
+      status.textContent = 'Failed to load books.';
+    }
+  }
+
+  loadBooks();
+</script>
+
+</body>
+</html>

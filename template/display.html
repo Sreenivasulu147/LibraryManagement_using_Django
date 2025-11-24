@@ -1,0 +1,72 @@
+
+{%extends 'homeapp2.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Books</title>
+     {%block content%}
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f5f5;
+        }
+        table {
+            width: 90%;
+            margin: 40px auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background: #007bff;
+            color: white;
+        }
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+ <h2 style="text-align:center;">📚 All Book Details</h2>
+    <table>
+        <tr>
+            <th>Book ID</th>
+            <th>Book Name</th>
+            <th>Price</th>
+            <th>Author</th>
+            <th>Publish Year</th>
+            <th>Quantity</th>
+            <th>Available</th>
+            <th>Image</th>
+        </tr>
+        {% for book in Books %}
+        <tr>
+            <td>{{ book.Book_id }}</td>
+            <td>{{ book.Book_name }}</td>
+            <td>{{ book.Book_price }}</td>
+            <td>{{ book.Book_Author }}</td>
+            <td>{{ book.Book_publish_year }}</td>
+            <td>{{ book.Book_quantity }}</td>
+            <td>{{ book.Book_stack|yesno:"Yes,No" }}</td>
+            <td>
+                {% if book.Book_image %}
+                    <img src="{{ book.Book_image.url }}" alt="{{ book.Book_name }}">
+                {% else %}
+                    No Image
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {%endblock%}
+</body>
+</html>

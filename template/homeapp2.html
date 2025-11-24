@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{%static 'css/style1.css' %}">
+    <link rel="stylesheet" href="{%static 'css/styel3.css' %}">
+    <title>Library Management</title>
+   <link rel="icon" type="image/x-icon" href="{% static 'images/image.png' %}">
+
+
+    <style>
+        nav{
+            display: grid;
+            grid-template-columns: 2fr 10fr;
+            padding: 20px;
+
+        }
+        .audv{
+            display: grid;
+            grid-template-columns:1.5fr 1.5fr 1.5fr 1.5fr 1fr 3fr 1fr 1fr ;    
+        }
+        /* form{
+            background-color: antiquewhite;
+            margin-right: 500px;
+            padding: 50px;
+            border-radius: 20px;
+            padding-right: 0px;
+            
+
+        } */
+        .in input{
+            color: rgb(13, 13, 0);
+            border-radius: 10px;
+            padding: 5px;
+            
+        }
+        .in input[type="submit"]{
+            background-color: rgb(48, 167, 210);
+            color: aliceblue;
+            border-radius: 10px;
+            width: 50px;
+        }
+          /* * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    } */
+
+    main {
+      /* position: relative;
+      width: 100%;
+      height: 400px; */
+      overflow: hidden;
+    } 
+
+    .slider {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 1s ease-in-out;
+    }
+
+    .slider img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    /* Optional: navigation dots */
+    .dots {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      background: #bbb;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: white;
+    }
+
+    .slider img{
+        height: 80vh;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        height: 250px;
+      }
+      .slider img {
+        height: 250px;
+      }
+    }
+    .su{
+        color: green;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        text-align: center;
+    }
+    a{
+        text-decoration: none;
+        color: black;      
+    }
+    a:hover{
+      font-size: 20px;
+      color: blue;
+    }
+    .mar{
+      margin-top: 100px;
+    }
+
+     /* ===== Footer Styling ===== */
+        footer {
+            background-color: #f7efe2;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        footer h3 {
+            color: #ff7b00;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        footer p {
+            color: #333;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .social-icons {
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            text-decoration: none;
+            color: #ff7b00;
+            margin: 0 10px;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #e66a00;
+        }
+
+        .footer-bottom {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #555;
+        } 
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+   
+    <header>
+        <nav>
+            <div>
+                <img src="{% static 'images/image2.png' %}" alt="Logo">
+            </div>
+            <div class="audv">
+                <div><a href="/app">Home</a></div>
+                <div><a href="/app/addBook">Add </a></div>
+                <div><a href="/app/update_view">Update</a></div>
+                <div><a href="/app/deletebook">Delete</a></div>
+                <div><a href="/app/view">View</a></div>
+                <form action="/app/search">
+                <div class="in"><input type="text" placeholder="Search Your book id or name" style="width: 200px;" name="search1"><input type="submit"></div></form>
+               <div class="login"><a href="/accounts/login/">Login</a></div> 
+              <div><a class="nav-link" href="/logout">Logout</a></div>
+            </div>
+
+        </nav>
+
+    </header>
+      <div class="su">{{sA}}</div>
+     {%block content%}
+    <main class="mar1">
+    <div class="slider" id="slider">
+      <img src="{% static 'images/8620842.jpg' %}" alt="">
+      <img src="{% static 'images/head2.jpg' %}" alt="">
+      <img src="{% static 'images/head3.jpg' %}" alt="">
+    </div>
+
+    <!-- Optional navigation dots -->
+    <div class="dots" id="dots"></div>
+
+
+  <script>
+    const slider = document.getElementById('slider');
+    const slides = document.querySelectorAll('#slider img');
+    const dotsContainer = document.getElementById('dots');
+    const totalSlides = slides.length;
+
+    let index = 0;
+
+    // Create navigation dots
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => showSlide(i));
+      dotsContainer.appendChild(dot);
+    }
+
+    const dots = document.querySelectorAll('.dot');
+
+    function showSlide(i) {
+      index = i;
+      slider.style.transform = `translateX(${-index * 100}%)`;
+      updateDots();
+    }
+
+    function updateDots() {
+      dots.forEach(dot => dot.classList.remove('active'));
+      dots[index].classList.add('active');
+    }
+
+    function nextSlide() {
+      index = (index + 1) % totalSlides;
+      showSlide(index);
+    }
+
+    // Auto slide every 3 seconds
+    setInterval(nextSlide, 3000);
+  </script>
+    </main>
+     <main>
+  <div id="status" class="status">Loading latest books…</div>
+  <div id="grid" class="wrap-container" aria-live="polite"></div>
+</main>
+
+<script>
+  const API = 'https://api.itbook.store/1.0/new';
+  const grid = document.getElementById('grid');
+  const status = document.getElementById('status');
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function createCard(book) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${escapeHtml(book.image)}" alt="Book Cover" class="thumb">
+      <div class="meta">
+        <h3>${escapeHtml(book.title)}</h3>
+        <p>${escapeHtml(book.subtitle || '')}</p>
+        <div class="price">${escapeHtml(book.price)}</div>
+        <a href="https://razorpay.com/payment-gateway/" target="_blank" class="btn">Buy</a>
+      </div>
+    `;
+    return card;
+  }
+
+  async function loadBooks() {
+    status.textContent = 'Loading...';
+    try {
+      const res = await fetch(API);
+      const data = await res.json();
+      grid.innerHTML = '';
+      data.books.forEach(book => grid.appendChild(createCard(book)));
+      status.textContent = '';
+    } catch (err) {
+      status.textContent = 'Failed to load books.';
+    }
+  }
+
+  loadBooks();
+</script>
+ {%endblock%}
+    <footer>
+    <h3>📚 BookYourBook</h3>
+    <p>Your trusted online library management platform.</p>
+    <div class="social-icons">
+      <a href="#"><i class="bi bi-facebook"></i></a>
+      <a href="#"><i class="bi bi-instagram"></i></a>
+      <a href="#"><i class="bi bi-twitter"></i></a>
+      <a href="#"><i class="bi bi-linkedin"></i></a>
+    </div>
+    <div class="footer-bottom">
+        © {{ now|date:"Y" }} BookYourBook. All Rights Reserved.
+    </div>
+</footer>
+<!-- Font Awesome for Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+ </footer>
+</body>
+</html>
