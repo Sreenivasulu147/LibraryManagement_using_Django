@@ -21,14 +21,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views
 from django.contrib.auth.views import LogoutView
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView,)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("app/",include("library_app.urls")),
     path('accounts/logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('logout/', custom_logout, name='logout'),
-    path('',view)
-
+    path('',view),
+    path("rapi/",include("library_app.api_urls")),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
